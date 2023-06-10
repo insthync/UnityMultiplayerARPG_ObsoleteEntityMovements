@@ -3,10 +3,13 @@ using LiteNetLibManager;
 using StandardAssets.Characters.Physics;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace MultiplayerARPG
 {
-    [System.Obsolete("Should use `CharacterControllerEntityMovement` instead.")]
+    [System.Obsolete("Should use `CharacterControllerEntityMovement` instead, can convert by \"Convert To Character Controller Entity Movement\" context menu.")]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(OpenCharacterController))]
@@ -24,7 +27,6 @@ namespace MultiplayerARPG
         public float backwardMoveSpeedRate = 0.75f;
         public float gravity = 9.81f;
         public float maxFallVelocity = 40f;
-        public LayerMask platformLayerMask = 1;
         [Tooltip("Delay before character change from grounded state to airborne")]
         public float airborneDelay = 0.01f;
         public bool doNotChangeVelocityWhileAirborne;
@@ -268,6 +270,61 @@ namespace MultiplayerARPG
         }
 
 #if UNITY_EDITOR
+
+        [ContextMenu("Convert To Character Controller Entity Movement")]
+        public void ConvertToCharacterControllerEntityMovement()
+        {
+            try
+            {
+                CapsuleCollider collider = gameObject.GetComponent<CapsuleCollider>();
+                if (collider != null)
+                {
+                    CharacterController characterController = gameObject.GetOrAddComponent<CharacterController>();
+                    characterController.material = collider.material;
+                    characterController.center = collider.center;
+                    characterController.radius = collider.radius;
+                    characterController.height = collider.height;
+                }
+
+                CharacterControllerEntityMovement entityMovement = gameObject.GetOrAddComponent<CharacterControllerEntityMovement>();
+                entityMovement.stoppingDistance = stoppingDistance;
+                entityMovement.movementSecure = movementSecure;
+
+                entityMovement.jumpHeight = jumpHeight;
+                entityMovement.applyJumpForceMode = applyJumpForceMode;
+                entityMovement.applyJumpForceFixedDuration = applyJumpForceFixedDuration;
+                entityMovement.backwardMoveSpeedRate = backwardMoveSpeedRate;
+                entityMovement.gravity = gravity;
+                entityMovement.maxFallVelocity = maxFallVelocity;
+
+                entityMovement.airborneDelay = airborneDelay;
+                entityMovement.doNotChangeVelocityWhileAirborne = doNotChangeVelocityWhileAirborne;
+                entityMovement.landedPauseMovementDuration = landedPauseMovementDuration;
+                entityMovement.beforeCrawlingPauseMovementDuration = beforeCrawlingPauseMovementDuration;
+                entityMovement.afterCrawlingPauseMovementDuration = afterCrawlingPauseMovementDuration;
+
+                entityMovement.underWaterThreshold = underWaterThreshold;
+                entityMovement.autoSwimToSurface = autoSwimToSurface;
+
+                entityMovement.useRootMotionForMovement = useRootMotionForMovement;
+                entityMovement.useRootMotionForAirMovement = useRootMotionForAirMovement;
+                entityMovement.useRootMotionForJump = useRootMotionForJump;
+                entityMovement.useRootMotionForFall = useRootMotionForFall;
+                entityMovement.useRootMotionWhileNotMoving = useRootMotionWhileNotMoving;
+                entityMovement.useRootMotionUnderWater = useRootMotionUnderWater;
+
+                entityMovement.snapThreshold = snapThreshold;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                EditorUtility.DisplayDialog("Entity Movement Conversion", "New Entity Movement component has been added.\n\nThe old component doesn't removed yet to let you check values.\n\nThen, you have to remove the old components (RigidBodyEntityMovement, OpenCharacterController, CapsuleCollider).", "OK");
+            }
+        }
+
         [ContextMenu("Applies Collider Settings To Controller")]
         public void AppliesColliderSettingsToController()
         {
