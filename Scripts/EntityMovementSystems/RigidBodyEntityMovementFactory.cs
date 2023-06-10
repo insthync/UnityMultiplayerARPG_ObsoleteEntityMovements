@@ -53,7 +53,9 @@ namespace MultiplayerARPG
             OpenCharacterController openCharacterController = obj.AddComponent<OpenCharacterController>();
             openCharacterController.SetRadiusHeightAndCenter(capsuleCollider.radius, capsuleCollider.height, capsuleCollider.center, false, false);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             return obj.AddComponent<RigidBodyEntityMovement>();
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }
