@@ -170,8 +170,13 @@ namespace MultiplayerARPG
         {
             float deltaTime = Time.deltaTime;
             Functions.UpdateMovement(deltaTime);
-            Functions.UpdateRotation(deltaTime);
             Functions.AfterMovementUpdate(deltaTime);
+        }
+
+        public override void EntityLateUpdate()
+        {
+            float deltaTime = Time.deltaTime;
+            Functions.UpdateRotation(deltaTime);
         }
 
         public bool GroundCheck()
