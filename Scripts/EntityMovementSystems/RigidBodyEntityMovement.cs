@@ -53,10 +53,58 @@ namespace MultiplayerARPG
         [Header("Networking Settings")]
         public float snapThreshold = 5.0f;
 
-        public Animator CacheAnimator { get; private set; }
-        public Rigidbody CacheRigidbody { get; private set; }
-        public CapsuleCollider CacheCapsuleCollider { get; private set; }
-        public OpenCharacterController CacheOpenCharacterController { get; private set; }
+        protected Animator _cacheAnimator;
+        public Animator CacheAnimator
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying && _cacheAnimator == null)
+                    _cacheAnimator = GetComponent<Animator>();
+#endif
+                return _cacheAnimator;
+            }
+            private set => _cacheAnimator = value;
+        }
+        protected Rigidbody _cacheRigidbody;
+        public Rigidbody CacheRigidbody
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying && _cacheRigidbody == null)
+                    _cacheRigidbody = GetComponent<Rigidbody>();
+#endif
+                return _cacheRigidbody;
+            }
+            private set => _cacheRigidbody = value;
+        }
+        protected CapsuleCollider _cacheCapsuleCollider;
+        public CapsuleCollider CacheCapsuleCollider
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying && _cacheCapsuleCollider == null)
+                    _cacheCapsuleCollider = GetComponent<CapsuleCollider>();
+#endif
+                return _cacheCapsuleCollider;
+            }
+            private set => _cacheCapsuleCollider = value;
+        }
+        protected OpenCharacterController _cacheOpenCharacterController;
+        public OpenCharacterController CacheOpenCharacterController
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying && _cacheOpenCharacterController == null)
+                    _cacheOpenCharacterController = GetComponent<OpenCharacterController>();
+#endif
+                return _cacheOpenCharacterController;
+            }
+            private set => _cacheOpenCharacterController = value;
+        }
         public BuiltInEntityMovementFunctions3D Functions { get; private set; }
 
         public float StoppingDistance { get { return Functions.StoppingDistance; } }
