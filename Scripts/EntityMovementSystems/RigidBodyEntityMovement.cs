@@ -3,6 +3,7 @@ using LiteNetLibManager;
 using StandardAssets.Characters.Physics;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
