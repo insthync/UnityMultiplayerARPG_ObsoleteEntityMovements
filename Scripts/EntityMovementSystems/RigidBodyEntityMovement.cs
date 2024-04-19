@@ -31,9 +31,13 @@ namespace MultiplayerARPG
         [Tooltip("Delay before character change from grounded state to airborne")]
         public float airborneDelay = 0.01f;
         public bool doNotChangeVelocityWhileAirborne;
+
+        [Header("Pausing")]
         public float landedPauseMovementDuration = 0f;
         public float beforeCrawlingPauseMovementDuration = 0f;
         public float afterCrawlingPauseMovementDuration = 0f;
+
+        [Header("Swimming")]
         [Range(0.1f, 1f)]
         public float underWaterThreshold = 0.75f;
         public bool autoSwimToSurface;
@@ -42,6 +46,12 @@ namespace MultiplayerARPG
         public float groundCheckYOffsets = 0.1f;
         public float forceUngroundAfterJumpDuration = 0.1f;
         public Color groundCheckGizmosColor = Color.blue;
+
+        [Header("Dashing")]
+        public EntityMovementForceApplier dashingForceApplier = new EntityMovementForceApplier();
+
+        [Header("Knocking Back")]
+        public EntityMovementForceApplier knockingBackForceApplier = new EntityMovementForceApplier();
 
         [Header("Root Motion Settings")]
         [FormerlySerializedAs("useRootMotionWhileNotMoving")]
@@ -163,6 +173,8 @@ namespace MultiplayerARPG
                 underWaterThreshold = underWaterThreshold,
                 autoSwimToSurface = autoSwimToSurface,
                 alwaysUseRootMotion = alwaysUseRootMotion,
+                dashingForceApplier = dashingForceApplier,
+                knockingBackForceApplier = knockingBackForceApplier,
                 useRootMotionForMovement = useRootMotionForMovement,
                 useRootMotionForAirMovement = useRootMotionForAirMovement,
                 useRootMotionForJump = useRootMotionForJump,
@@ -227,6 +239,7 @@ namespace MultiplayerARPG
         {
             float deltaTime = Time.deltaTime;
             Functions.UpdateMovement(deltaTime);
+            Functions.UpdateRotation(deltaTime);
             Functions.AfterMovementUpdate(deltaTime);
             if (_forceUngroundCountdown > 0f)
                 _forceUngroundCountdown -= deltaTime;
@@ -235,7 +248,6 @@ namespace MultiplayerARPG
         public override void EntityLateUpdate()
         {
             float deltaTime = Time.deltaTime;
-            Functions.UpdateRotation(deltaTime);
             Functions.FixSwimUpPosition(deltaTime);
         }
 
@@ -395,6 +407,9 @@ namespace MultiplayerARPG
 
                 entityMovement.underWaterThreshold = underWaterThreshold;
                 entityMovement.autoSwimToSurface = autoSwimToSurface;
+
+                entityMovement.dashingForceApplier = dashingForceApplier;
+                entityMovement.knockingBackForceApplier = knockingBackForceApplier;
 
                 entityMovement.useRootMotionForMovement = useRootMotionForMovement;
                 entityMovement.useRootMotionForAirMovement = useRootMotionForAirMovement;
