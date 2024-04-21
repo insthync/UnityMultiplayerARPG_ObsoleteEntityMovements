@@ -174,7 +174,6 @@ namespace MultiplayerARPG
                 autoSwimToSurface = autoSwimToSurface,
                 alwaysUseRootMotion = alwaysUseRootMotion,
                 dashingForceApplier = dashingForceApplier,
-                knockingBackForceApplier = knockingBackForceApplier,
                 useRootMotionForMovement = useRootMotionForMovement,
                 useRootMotionForAirMovement = useRootMotionForAirMovement,
                 useRootMotionForJump = useRootMotionForJump,
