@@ -50,9 +50,6 @@ namespace MultiplayerARPG
         [Header("Dashing")]
         public EntityMovementForceApplier dashingForceApplier = new EntityMovementForceApplier();
 
-        [Header("Knocking Back")]
-        public EntityMovementForceApplier knockingBackForceApplier = new EntityMovementForceApplier();
-
         [Header("Root Motion Settings")]
         [FormerlySerializedAs("useRootMotionWhileNotMoving")]
         public bool alwaysUseRootMotion;
@@ -418,7 +415,6 @@ namespace MultiplayerARPG
                 entityMovement.autoSwimToSurface = autoSwimToSurface;
 
                 entityMovement.dashingForceApplier = dashingForceApplier;
-                entityMovement.knockingBackForceApplier = knockingBackForceApplier;
 
                 entityMovement.useRootMotionForMovement = useRootMotionForMovement;
                 entityMovement.useRootMotionForAirMovement = useRootMotionForAirMovement;
