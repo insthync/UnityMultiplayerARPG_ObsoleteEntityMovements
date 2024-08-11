@@ -277,7 +277,7 @@ namespace MultiplayerARPG
             Gizmos.color = prevColor;
         }
 #endif
-        public Bounds GetBounds()
+        public Bounds GetMovementBounds()
         {
             return CacheCapsuleCollider.bounds;
         }
