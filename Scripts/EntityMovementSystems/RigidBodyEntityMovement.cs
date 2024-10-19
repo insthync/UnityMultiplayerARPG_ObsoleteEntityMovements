@@ -83,6 +83,8 @@ namespace MultiplayerARPG
 #if UNITY_EDITOR
                 if (!Application.isPlaying && _cacheRigidbody == null)
                     _cacheRigidbody = GetComponent<Rigidbody>();
+                if (_cacheAnimator == null)
+                    _cacheAnimator = GetComponentInChildren<Animator>();
 #endif
                 return _cacheRigidbody;
             }
@@ -130,6 +132,8 @@ namespace MultiplayerARPG
         {
             // Prepare animator component
             CacheAnimator = GetComponent<Animator>();
+            if (CacheAnimator == null)
+                CacheAnimator = GetComponentInChildren<Animator>();
             // Prepare rigidbody component
             CacheRigidbody = gameObject.GetOrAddComponent<Rigidbody>();
             // Prepare collider component
